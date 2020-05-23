@@ -1,12 +1,13 @@
 # Write your code here
 import random
 
+EXIT = 'exit'
+PLAY = 'play'
+MENU_CHOICES = [EXIT, PLAY]
+
 NOT_SINGLE_LETTER = 'You should input a single letter'
-
 NOT_ASCII_LOWERCASE = 'It is not an ASCII lowercase letter'
-
 ALREADY_TRIED = 'You already typed this letter'
-
 NO_IMPROVEMENTS = 'No improvements'
 
 ATTEMPT_FAILURE = 'No such letter in the word'
@@ -15,6 +16,7 @@ FAILURE = 'You are hanged!'
 SUCCESS = 'You survived!'
 ASK_FOR_INPUT = 'Guess the word:'
 TITLE = 'H A N G M A N'
+
 POSSIBLE_WORDS = ['python', 'java', 'kotlin', 'javascript']
 HIDDEN_LETTER = '-'
 MAX_ATTEMPTS = 8
@@ -96,31 +98,42 @@ def has_errors(attempt: str, already_tried_letters):
     return False
 
 
-n_attempts = 0
-attempted_letters = []
-word_to_guess = random.choice(POSSIBLE_WORDS)
-letter_attempt = ''
-already_guessed = HIDDEN_LETTER * len(word_to_guess)
-display_title()
+def user_wants_to_play():
+    menu_choice = ''
+    while menu_choice not in MENU_CHOICES:
+        menu_choice = input('Type "play" to play the game, "exit" to quit:')
 
-while n_attempts < MAX_ATTEMPTS:
-    print()
-    print(already_guessed)
-    letter_attempt = ask_letter()
-    error = has_errors(letter_attempt, attempted_letters)
-    if error:
-        print(error)
-        continue
+    return menu_choice == PLAY
 
-    attempted_letters.append(letter_attempt)
-    if not is_letter_improvement(letter_attempt, already_guessed):
-        print(NO_IMPROVEMENTS)
-        n_attempts += 1
-    elif is_letter_correct(letter_attempt, word_to_guess):
-        already_guessed = add_letter_in_hint(letter_attempt, already_guessed, word_to_guess)
-    else:
-        print(ATTEMPT_FAILURE)
-        n_attempts += 1
 
-is_success = is_game_success(already_guessed, word_to_guess)
-display_end_message(is_success)
+user_choice = user_wants_to_play()
+while user_choice:
+    n_attempts = 0
+    attempted_letters = []
+    word_to_guess = random.choice(POSSIBLE_WORDS)
+    letter_attempt = ''
+    already_guessed = HIDDEN_LETTER * len(word_to_guess)
+    display_title()
+
+    while n_attempts < MAX_ATTEMPTS:
+        print()
+        print(already_guessed)
+        letter_attempt = ask_letter()
+        error = has_errors(letter_attempt, attempted_letters)
+        if error:
+            print(error)
+            continue
+
+        attempted_letters.append(letter_attempt)
+        if not is_letter_improvement(letter_attempt, already_guessed):
+            print(NO_IMPROVEMENTS)
+            n_attempts += 1
+        elif is_letter_correct(letter_attempt, word_to_guess):
+            already_guessed = add_letter_in_hint(letter_attempt, already_guessed, word_to_guess)
+        else:
+            print(ATTEMPT_FAILURE)
+            n_attempts += 1
+
+    is_success = is_game_success(already_guessed, word_to_guess)
+    display_end_message(is_success)
+    user_choice = user_wants_to_play()
