@@ -79,7 +79,7 @@ files:
             no_such_letter = 'No such letter in the word'
             already_typed = 'You already typed this letter'
             not_ascii = 'It is not an ASCII lowercase letter'
-            print_single = 'You should print a single letter'
+            print_single = 'You should input a single letter'
 
             if is_hanged:
                 if (no_such_letter not in full_blocks[-1]):
@@ -282,5 +282,5 @@ files:
         CoffeeMachineTest('hangman.hangman').run_tests()
   learner_created: false
 feedback_link: https://hyperskill.org/projects/69/stages/378/implement
-status: Unchecked
+status: Solved
 record: -1

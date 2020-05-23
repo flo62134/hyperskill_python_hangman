@@ -91,7 +91,7 @@ files:
             no_such_letter = 'No such letter in the word'
             already_typed = 'You already typed this letter'
             not_ascii = 'It is not an ASCII lowercase letter'
-            print_single = 'You should print a single letter'
+            print_single = 'You should input a single letter'
 
             if is_hanged:
                 if (no_such_letter not in full_blocks[-1]):
